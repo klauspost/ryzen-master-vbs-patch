@@ -9,7 +9,7 @@ This patch disables the VBS check on startup. It does NOT fix what might be the 
 
 This MAY break functionality and it MAY stop working on future versions.
 
-This has been confirmed to work on v2.1.1.1472 (2020) and matches the change described above for v2.1.0.1424 so versions inbetween are likely fine as well. 
+This has been confirmed to work on v2.1.1.1472 (2020) and matches the change described above for v2.1.0.1424 (2019) so versions inbetween are likely fine as well. 
 The exact version does not have to match, but if AMD changes the code for detection it will likely break.
 
 # Running
