@@ -1,6 +1,6 @@
 # ryzen-master-vbs-patch
 
-AMD Ryzen Master VBS patcher allows AMD Ryzen Master to run while Virtualization is enabled.
+AMD Ryzen Master VBS patcher allows AMD Ryzen Master to run while Hyper-V Virtualization is enabled.
 
 
 Thanks to [@TOM_RUS](https://twitter.com/TOM_RUS/status/1204867886197755904) for finding this.
@@ -18,8 +18,7 @@ Confirmed versions:
  * v2.1.1.1472 (2020)
  * v2.2.0.1543 (2020)
 
-Note that on Threadripper CPUs the actually installed version may be different and the installed executable therefore cannot be patched. 
-The version in the "About" page in the software should reflect the actual version. 
+Threadripper patch was supplied by [@neoKushan](https://github.com/neoKushan).
 
 # Running
 
