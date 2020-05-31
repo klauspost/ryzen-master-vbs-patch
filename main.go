@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"errors"
 	"flag"
 	"fmt"
 	"io/ioutil"
@@ -29,18 +30,32 @@ func main() {
 	for _, f := range args {
 		dir, file := filepath.Split(f)
 		err := patch(filepath.Join(dir, file), filepath.Join(dir, *prefix+file))
-		if err != nil {
+		switch err {
+		case nil:
+		case errCannotPatch:
+			fmt.Println(err)
+			err = patchAlt(filepath.Join(dir, file), filepath.Join(dir, *prefix+file))
+			if err == errCannotPatch {
+				fmt.Println(err)
+				fmt.Println("Skipping file...")
+			} else if err != nil {
+				fmt.Println(err)
+				os.Exit(1)
+			}
+		default:
 			fmt.Println(err)
 			os.Exit(1)
 		}
 	}
 }
 
+var errCannotPatch = errors.New("byte sequence not found")
+
 var search = []byte{0x44, 0x39, 0x6D, 0xA8, 0x0F, 0x84, 0xF7}
 var replace = []byte{0x44, 0x39, 0x6D, 0xA8, 0x90, 0xe9, 0xf7}
 
 func patch(in string, out string) error {
-	fmt.Println("Patching", in)
+	fmt.Println("Applying v2 patch on", in)
 	b, err := ioutil.ReadFile(in)
 	if err != nil {
 		return err
@@ -48,10 +63,32 @@ func patch(in string, out string) error {
 	c := bytes.Count(b, search)
 	fmt.Println("Matching byte sequences:", c, "(should be 1)")
 	if c != 1 {
-		fmt.Println("Skipping file...")
-		return nil
+		return errCannotPatch
 	}
 	b = bytes.Replace(b, search, replace, -1)
+	fmt.Println("Writing to", out)
+	err = ioutil.WriteFile(out, b, 0)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+var searchAlt = []byte{0x00, 0x39, 0x7D, 0x90, 0x0F, 0x84, 0xE8, 0x00}
+var replaceAlt = []byte{0x00, 0x39, 0x7D, 0x90, 0x90, 0xE9, 0xE8, 0x00}
+
+func patchAlt(in string, out string) error {
+	fmt.Println("Applying alternative patch on", in)
+	b, err := ioutil.ReadFile(in)
+	if err != nil {
+		return err
+	}
+	c := bytes.Count(b, searchAlt)
+	fmt.Println("Matching byte sequences:", c, "(should be 1)")
+	if c != 1 {
+		return errCannotPatch
+	}
+	b = bytes.Replace(b, searchAlt, replaceAlt, -1)
 	fmt.Println("Writing to", out)
 	err = ioutil.WriteFile(out, b, 0)
 	if err != nil {
