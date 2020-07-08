@@ -18,6 +18,8 @@ Confirmed versions:
  * v2.1.1.1472 (2020)
  * v2.2.0.1543 (2020)
 
+ * 2.3.0.1591 (2020) BROKEN.
+
 Threadripper patch was supplied by [@neoKushan](https://github.com/neoKushan).
 
 # Running
