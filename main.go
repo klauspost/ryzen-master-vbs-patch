@@ -53,6 +53,11 @@ var patterns = []struct {
 		search:  []byte{0x00, 0x39, 0x7D, 0x90, 0x0F, 0x84, 0xE8, 0x00},
 		replace: []byte{0x00, 0x39, 0x7D, 0x90, 0x90, 0xE9, 0xE8, 0x00},
 	},
+	{
+		desc:    "Ryzen Master 1000 series CPU",
+		search:  []byte{0x72, 0x62, 0x01, 0x00, 0x39, 0x74, 0x24, 0x68, 0x0f, 0x84},
+		replace: []byte{0x72, 0x62, 0x01, 0x00, 0x39, 0x74, 0x24, 0x68, 0x90, 0xe9},
+	},
 }
 
 func init() {
@@ -99,7 +104,7 @@ func patch(in string, out string) error {
 			continue
 		}
 		b = bytes.Replace(b, pattern.search, pattern.replace, -1)
-		fmt.Printf("Writing to %q\n", out)
+		fmt.Printf("Success! Writing to %q\n", out)
 		return ioutil.WriteFile(out, b, os.ModePerm)
 	}
 	return errCannotPatch
