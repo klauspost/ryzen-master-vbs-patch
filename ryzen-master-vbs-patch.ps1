@@ -20,8 +20,7 @@ $exe = 'C:\Program Files\AMD\RyzenMaster\bin\AMD Ryzen Master.exe'
 
 if (!(Test-Path $exe))
 {
-    Write-Host "'$exe' not found. Press any key to continue..."
-    [void][System.Console]::ReadKey($true)
+    Read-Host "'$exe' not found. Press ENTER to continue..."
     
     return
 }
@@ -55,11 +54,9 @@ Foreach ($pattern in $patterns)
     Write-Host "Writing to $exe"
     [System.IO.File]::WriteAllBytes($exe, $output)
 
-    Write-Host "Done. Press any key to continue..."
-    [void][System.Console]::ReadKey($true)
+    Read-Host "Done. Press ENTER to continue..."
 
     return
 }
 
-Write-Host "FAILED: no byte sequence found. Press any key to continue..."
-[void][System.Console]::ReadKey($true)
+Read-Host "FAILED: no byte sequence found. Press ENTER to continue..."
