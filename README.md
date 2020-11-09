@@ -18,6 +18,7 @@ Confirmed versions:
  * v2.1.1.1472 (2020)
  * v2.2.0.1543 (2020)
  * v2.3.0.1591 (2020)
+ * v2.6.0.1692 (2020) - some versions tested.
 
 Threadripper patch was supplied by [@neoKushan](https://github.com/neoKushan).
 Ryzen 1000 series patch was supplied by [@kaelanduck](https://github.com/kaelanduck).
