@@ -32,6 +32,8 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+
+	"github.com/klauspost/cpuid/v2"
 )
 
 var patterns = []struct {
@@ -82,7 +84,7 @@ func main() {
 		switch err {
 		case nil:
 		default:
-			fmt.Println(err)
+			fmt.Printf("\nError: %v", err)
 			os.Exit(1)
 		}
 	}
@@ -91,7 +93,10 @@ func main() {
 var errCannotPatch = errors.New("no byte sequence not found")
 
 func patch(in string, out string) error {
-	fmt.Printf("Reading %q\n", in)
+	if cpuid.CPU.BrandName != "" {
+		fmt.Printf("* Host CPU: %s\n\n", cpuid.CPU.BrandName)
+	}
+	fmt.Printf("Reading %q\n\n", in)
 	b, err := ioutil.ReadFile(in)
 	if err != nil {
 		return err
@@ -101,6 +106,9 @@ func patch(in string, out string) error {
 		fmt.Printf("%d. Checking patch for %q. ", i, pattern.desc)
 		fmt.Println("Matching byte sequences:", c, "(should be 1)")
 		if c != 1 {
+			if c = bytes.Count(b, pattern.replace); c > 0 {
+				fmt.Println(" -> Found", c, "replacement pattern(s). Is this already patched?\n")
+			}
 			continue
 		}
 		b = bytes.Replace(b, pattern.search, pattern.replace, -1)
