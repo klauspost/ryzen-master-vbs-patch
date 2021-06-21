@@ -48,9 +48,12 @@ From the commandline, the syntax is:
 # Building 
 
 Requires Go SDK  installed.
- 
-`go get github.com/klauspost/ryzen-master-vbs-patch`
-`go install github.com/klauspost/ryzen-master-vbs-patch`
+
+In the source directory, use regular go build command to build the executable:
+
+```bash
+go build .
+```
 
 # License
 
