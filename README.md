@@ -1,3 +1,10 @@
+# Not needed for current versions
+
+The most recent versions do not require this patch and the program starts fine without IBS instructions.
+
+This project is therefore archived.
+
+
 # ryzen-master-vbs-patch
 
 AMD Ryzen Master VBS patcher allows AMD Ryzen Master to run while Hyper-V Virtualization is enabled.
